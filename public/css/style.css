@@ -1,0 +1,51 @@
+h1 {
+  font: 3em "Cambria", "Optima", "Arial";
+  text-align: center;
+  border-bottom: 3px solid #000000;
+}
+
+.center {
+	text-align: center;
+}
+
+.error {
+	color: red;
+}
+
+#left {
+	float:left;
+	width:40%;
+	padding-bottom: 20px;
+}
+#right {
+	float:right;
+	width:60%;
+	padding-bottom: 20px;
+}
+
+.footer {
+  padding-top: 10px;
+  color: #777;
+  border-top: 3px solid #000000;
+  float:left;
+  width:100%;
+}
+
+.bar {
+  fill: steelblue;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
