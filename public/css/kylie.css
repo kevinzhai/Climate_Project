@@ -1,0 +1,249 @@
+.svg {
+  position: absolute;
+  top: 57%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+}
+.svg g {
+  cursor: pointer;
+}
+.svg g polygon {
+  stroke: white;
+  stroke-width: 4;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  opacity: 0.75;
+  -webkit-transition: opacity 200ms ease-in;
+  transition: opacity 200ms ease-in;
+}
+
+
+
+.svg g text {
+  text-anchor: middle;
+  alignment-baseline: middle;
+  -webkit-transition: opacity 200ms ease-in;
+  transition: opacity 200ms ease-in;
+}
+
+
+.svg g text:not(.data) {
+  fill: white;
+}
+
+/* font for colony change and affliction once highlighted */
+.svg g text.data {
+  fill: #a6a6a6;
+  font-weight: 100;
+  font-size: 20px;
+  letter-spacing: 1.5px;
+}
+
+/* font for state once highlighted */
+.svg g text.data.title {
+  font-size: 30px;
+  font-weight: 150;
+  fill: #000000;
+  letter-spacing: 2px;
+}
+
+/* state name once highlighted (on hex) */
+.svg g .state-name, .svg g .data {
+  opacity: 0;
+  font-size: 20px;
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+
+}
+
+/* state abbreviation on base map */
+.svg g .state-abbr {
+  font-size: 20px;
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+  opacity: 1;
+}
+
+
+
+.svg g.hover .state-name, .svg g.hover .data {
+  -webkit-animation: fade-in 300ms ease-in 200ms forwards;
+          animation: fade-in 300ms ease-in 200ms forwards;
+}
+.svg g.hover .state-abbr {
+  -webkit-animation: fade-out 300ms ease-in 200ms forwards;
+          animation: fade-out 300ms ease-in 200ms forwards;
+}
+.svg g.hover polygon {
+  opacity: 1;
+  -webkit-transition: fill 200ms ease-in;
+  transition: fill 200ms ease-in;
+  -webkit-animation: scale-polygon 300ms ease-in forwards;
+          animation: scale-polygon 300ms ease-in forwards;
+}
+
+@-webkit-keyframes scale-polygon {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    stroke-width: 4;
+  }
+  to {
+    -webkit-transform: scale(2);
+            transform: scale(2);
+    stroke-width: 2;
+  }
+}
+
+@keyframes scale-polygon {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    stroke-width: 4;
+  }
+  to {
+    -webkit-transform: scale(2);
+            transform: scale(2);
+    stroke-width: 2;
+  }
+}
+@-webkit-keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+h1 {
+  color: #000000;
+  font-weight: 100;
+  text-align: center;
+  font-size: 2.6em;
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  z-index: 1;
+ /* background: rgba(255, 255, 255, 0.8); */
+  padding: 0.2em 0;
+  letter-spacing: 2px;
+}
+h1 a {
+  color: #b35900;
+  text-decoration: none;
+  font-size: 0.5em;
+}
+
+  .my-legend .legend-title {
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 90%;
+    position: absolute;
+    bottom: 80px;
+    right: 30px;
+    font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+    }
+
+  .my-legend .legend-scale ul {
+    margin: 0.5px;
+    /*padding-top: 7px; */
+    float: right;
+    list-style: none;
+    position: absolute;
+    bottom: 33px;
+    right: 30px;
+    font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+
+    }
+
+  .my-legend .legend-scale ul li {
+    padding-bottom: 10px;
+    display: block;
+    float: right;
+    width: 70px;
+    text-align: center;
+    font-size: 80%;
+    list-style: none;
+    /* position: absolute;
+    bottom: 30px; */
+    }
+
+  .my-legend ul.legend-labels li span {
+    display: block;
+    float: right;
+    height: 13px;
+    width: 70px;
+    position: absolute;
+    bottom: 30px;
+    opacity: 0.75;
+    }
+
+  .my-legend .legend-source {
+    font-size: 70%;
+    color: #999;
+    clear: both;
+    position: absolute;
+    padding-left: 7px;
+    bottom: 20px;
+    right: 30px;
+    }
+
+  .my-legend a {
+    color: #777;
+    float: right;
+    }
+
+path { 
+    stroke: #000;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: #000;
+    stroke: #000;
+    stroke-width: .8;
+    shape-rendering: crispEdges;
+    
+}
+
+.xaxis {
+    font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    fill: #000;
+    stroke: #000;
+    stroke-width: .5;
+}
+
+.yaxis {
+    font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    fill: #000;
+    stroke: #000;
+    stroke-width: .5;
+}
+
+
+
+
+
+
+
