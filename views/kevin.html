@@ -87,7 +87,7 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                  <h1 class="brand-heading">This is Kevin's Viz </h1>
+                  <h1 class="brand-heading">Ecosystem Destruction</h1>
                   <a href="#about" class="btn btn-circle page-scroll">
                     <i class="fa fa-angle-double-down animated"></i>
                   </a>
@@ -100,29 +100,41 @@
       </section>
       <!-- Kevin D3 Viz -->
       <section id="kevin" class="container content-section text-center">
+        <style>
+          #tooltip {
+            color: black;
+          }
+        </style>
         <h1>Coral Bleaching in the Great Barrier Reef</h1>
+        <p>Another terrible impact of climate change is its affect on the marine wildlife. Specifically, high CO2 levels causes the ocean to absorb excess carbon, creating a phenomena known as ocean acidification. Additionally, the high C02 levels also raise the temperature of the ocean water.</p>
+
+        <p>One effect of ocean acidification and warming has been the death of coral reef colonies. The warmer temperatures cause the coral to reject the algae that gives the coral its color and energy. Known as "coral bleaching", this term refers to the color of coral reefs turning to white as they die. This phenomena has been seen in the Great Barrier Reef as scores of reef colonies die. </p>
+
+        <img src="pics/16REEF1-superJumbo.jpg" height='600' width='800'></img>
         <body class="center" bgcolor="white">
-          <div class="center" id="map" style="width:1100px;height:900px;"></div>
+        <div align="center" class="center" id="map" style="width:1100px;height:800px;"></div>
+          <div><h2>1998</h2></div>
+          <div id="legend"><h3>Legend</h3></div>
           <script src="/js/addMarkers.js"></script>
           <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbk3tVuTbxgHCrJ5XTTc2aIqCf7C9WQ-A&callback=initMap">
-          </script>
-        </body>
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbk3tVuTbxgHCrJ5XTTc2aIqCf7C9WQ-A&callback=initMap">
+        </script>
+      </body>
 
-      </section>
+    </section>
 
-      <!-- jQuery -->
-      <script src="vendor/jquery/jquery.js"></script>
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.js"></script>
 
-      <!-- Bootstrap Core JavaScript -->
-      <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
-      <!-- Plugin JavaScript -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
-      <!-- Theme JavaScript -->
-      <script src="js/grayscale.min.js"></script>
+    <!-- Theme JavaScript -->
+    <script src="js/grayscale.min.js"></script>
 
-    </body>
+  </body>
 
-    </html>
+  </html>
