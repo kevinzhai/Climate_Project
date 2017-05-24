@@ -1,32 +1,28 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<style>
-
-body {
+.ky2 body {
   font: 10px sans-serif;
   font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
   width: 1350px;
-
+  background: #fff;
 }
 
-.chart { 
+.ky2 .chart { 
   background: #fff;
 }
 
 /* display of info on bottom when stream highlighted */
-p {
+.ky2 p {
   font-size:  15px 
 
 }
 
 /* font for reduction percentage, special emphasis */
-b {
+.ky2 b {
   font-weight: bold;
   font-size: 20px;
 }
 
 
- h1 {
+.ky2 h1 {
   color: #000000;
   font-weight: 100;
   text-align: center;
@@ -38,13 +34,13 @@ b {
   height: 1px;
   width: 100%;
   z-index: 1;
- /* background: rgba(255, 255, 255, 0.8); */
+  /* background: rgba(255, 255, 255, 0.8); */
   padding: 0.2em 0;
   letter-spacing: 2px;
 }
 
 /* average surface temperature label */
-h2 {
+.ky2 h2 {
   color: #000000;
   font-weight: 100;
   text-align: center;
@@ -56,14 +52,14 @@ h2 {
   height: 1px;
   width: 100%;
   z-index: 1;
- /* background: rgba(255, 255, 255, 0.8); */
+  /* background: rgba(255, 255, 255, 0.8); */
   padding: 0.2em 0;
   letter-spacing: 1.5px;
 
 }
 
 /* annotation for temperature decrease */
- h3 {
+.ky2 h3 {
   color: #000000;
   font-weight: 100;
   text-align: center;
@@ -75,13 +71,13 @@ h2 {
   height: 1px;
   width: 100%;
   z-index: 1;
- /* background: rgba(255, 255, 255, 0.8); */
+  /* background: rgba(255, 255, 255, 0.8); */
   padding: 0.2em 0;
   letter-spacing: 1.2px;
   line-height: .7em;
- }
+}
 
-  h4 {
+.ky2 h4 {
   color: #000000;
   font-weight: 100;
   text-align: center;
@@ -93,52 +89,52 @@ h2 {
   height: 1px;
   width: 100%;
   z-index: 1;
- /* background: rgba(255, 255, 255, 0.8); */
+  /* background: rgba(255, 255, 255, 0.8); */
   padding: 0.2em 0;
   letter-spacing: 1.2px;
   line-height: .7em;
   -webkit-transform: rotate(-90deg);
- }
-
-
-div.tooltip2 { 
-
-    font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
-    font-size: 15px;
-    color: white;
-
-    position: fixed;     
-    text-align: center;     
-    width: 100px;          
-    height: 50px;         
-    padding: 2px;       
-       
-    background-color: #808080; 
-    border: 0px;    
-    border-radius: 8px;     
-    pointer-events: none;     
 }
 
 
-.axis path, .axis line {
+.ky2 div.tooltip2 { 
+
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  color: white;
+
+  position: fixed;     
+  text-align: center;     
+  width: 100px;          
+  height: 50px;         
+  padding: 2px;       
+
+  background-color: #808080; 
+  border: 0px;    
+  border-radius: 8px;     
+  pointer-events: none;     
+}
+
+
+.ky2 .axis path, .ky2 .axis line {
   fill: none;
   stroke: #000;
   stroke-width: 2px;
   shape-rendering: crispEdges;
 }
 
-button {
+.ky2 button {
   position: absolute;
   right: 50px;
   top: 10px;
 }
 
-rect.bordered {
-        stroke: #E6E6E6;
-        stroke-width:1px;   
+.ky2 rect.bordered {
+  stroke: #E6E6E6;
+  stroke-width:1px;   
 }
 
-text.mono {
+.ky2 text.mono {
   font-size: 9pt;
   font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
   fill: #aaa;
@@ -146,389 +142,8 @@ text.mono {
   top: 1000px;
 }
 
-text.axis-workweek {
+.ky2 text.axis-workweek {
   fill: #999999;
   position: absolute;
   bottom: 10px;
 }
-
-</style>
-
-
-<body>
-
- <h1> FISH MARKET YIELDS OFF ADRIATIC SEA</h1>
-
- <h2> Average Surface Temperature </h2>
-
- <h3 allign = "left"> The Chioggia market experienced a  <br></br> <b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;surge in fish yields </b>  following a significant <br></br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reduction in the average global temperature </h3>
-
-<h4> Yield (kg) </h4> 
-
-<div id="chart"></div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-    <div id="dataset-picker">
-    </div>
-<script>
-
-      var margin = { top: 50, right: 0, bottom: 1, left: 80 },
-          width = 1800 - margin.left - margin.right,
-          height = 100 - margin.top - margin.bottom,
-          gridSize = 71.8,
-          buckets = 5,
-          //colors = ['#ffffff', '#f0f0f0','#d9d9d9','#bdbdbd','#969696','#737373','#525252','#252525','#00000'];
-          //colors = ['#f7f7f7','#d9d9d9','#bdbdbd','#969696','#636363','#252525']
-          colors = ['#fef0d9', '#fdcc8a', '#fc8d59', '#d7301f', '#b30000'];
-          days = [" "],
-          times = ["1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013"];
-          datasets = ["avg_temperature.tsv"];
-
-      var svg = d3.select("#chart").append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-          .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  
-      var heatmapChart = function(tsvFile) {
-
-        d3.tsv(tsvFile,
-        function(d) {
-          return {
-            day: +d.day,
-            hour: +d.hour,
-            value: +d.value
-          };
-        },
-
-        function(error, data) {
-
-        var colorScale = d3.scale.quantile()
-              .domain([48.51125, 50.25410, 49.22060, 49.36955, 49.61405, 49.66910, 49.55915, 49.40150,49.80680, 49.96410, 49.70750, 48.11255, 48.44675, 49.11005, 50.46995, 49.76027])
-              //.domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
-              .range(colors);
-
-              
-
-          var cards = svg.selectAll(".hour")
-              .data(data, function(d) {return d.day+':'+d.hour;});
-
-          cards.append("title");
-
-          cards.enter().append("rect")
-              .attr("x", function(d) { return (d.hour - 1) * gridSize; })
-              .attr("y", function(d) { return (d.day - 1) * gridSize; })
-              .attr("rx", 4)
-              .attr("ry", 4)
-              .attr("class", "hour bordered")
-              .attr("width", gridSize)
-              .attr("height", 25)
-              .style("fill", colors[0]);
-
-          cards.transition().duration(1000)
-              .style("fill", function(d) { return colorScale(d.value); });
-
-          cards.select("title").text(function(d) { return d.value; });
-          
-          cards.exit().remove();
-
-        });  
-      };
-
-      heatmapChart(datasets[0]);
-      
-    </script>
-
-
-
-
-
-<div class="chart">
-<script src="http://d3js.org/d3.v3.min.js"></script>
-
-</div>
-
-<script>
-
-chart("STREAM2.5.csv", "blue");
-
-var datearray = [];
-var colorrange = [];
-
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
-function getSpeciesInfo(x) {
-
-  var info = "";
-
-  if (x == "Shrimp") {
-      info =  "Overall, there was a" + "<b>" + " 73% reduction" + "</b>" + " in shrimp yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 13,834 kg of shrimp was caught each month in 1997. In 2013, only 3,795 kg of shrimp was caught each month.";
-  }
-
-  else if (x == "Clam") {
-    info = "Overall, there was a" + "<b>" + " 100% reduction" + "</b>" + " in clam yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 2,612 kg of clams was caught each month in 1997. In 2013, no clams were caught.";
-  } 
-
-  else if (x == "Sprat") {
-    info = "Overall, there was a" + "<b>" + " 90% reduction" + "</b>" + " in sprat yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 9,775 kg of sprat was caught each month in 1997. In 2013, only 999 kg of sprat was caught each month.";
-  } 
-
-  else if (x == "Hake") {
-    info = "Overall, there was a" + "<b>" + " 67% reduction" + "</b>" + " in hake yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 8,211 kg of hake was caught each month in 1997. In 2013, only 2,735 kg of hake was caught each month.";
-  } 
-
-  else if (x == "Bay Mussel") {
-    info = "Overall, there was a" + "<b>" + " 56% reduction" + "</b>" + " in bay mussel yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 6,021 kg of bay mussel was caught each month in 1997. In 2013, only 2,648 kg of bay mussel was caught each month.";
-  } 
-
-  else if (x == "Smelt") {
-    info = "Overall, there was a" + "<b>" + " 40% reduction" + "</b>" + " in smelt yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 22,557 kg of smelt was caught each month in 1997. In 2013, only 13,530 kg of smelt was caught each month.";
-  } 
-
-  else if (x == "Goby") {
-    info = "Overall, there was a" + "<b>" + " 46% reduction" + "</b>" + " in goby yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 10,320 kg of goby was caught each month in 1997. In 2013, only 5,610 kg of goby was caught each month.";
-  } 
-
-  else if (x == "Red Bandfish") {
-    info = "Overall, there was a" + "<b>" + " 57% reduction" + "</b>" + " in red bandfish yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 3,401 kg of red bandfish was caught each month in 1997. In 2013, only 1,477 kg of red bandfish was caught each month.";
-  }  
-
-  else if (x == "Squid") {
-    info = "Overall, there was a" + "<b>" + " 89% reduction" + "</b>" + " in squid yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 20,068 kg of squid was caught each month in 1997. In 2013, only 2,300 kg of squid was caught each month.";
-  }
-
-  else if (x == "Seabass") {
-    info = "Overall, there was a" + "<b>" + " 70% reduction" + "</b>" + " in seabass yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 8,926 kg of seabass was caught each month in 1997. In 2013, only 2,656 kg of seabass was caught each month.";
-  }
-
-  else if (x == "Octopus") {
-    info = "Overall, there was a" + "<b>" + " 66% reduction" + "</b>" + " in octopus yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 43,488 kg of octopus was caught each month in 1997. In 2013, only 14,964 kg of octopus was caught each month.";
-  }
-
-  else if (x == "Scallop") {
-    info = "Overall, there was a" + "<b>" + " 100% reduction" + "</b>" + " in scallop yield at the Chioggia market in the Mediterranean over the 17 year span." + "<br></br>" + "An average of 68,092 kg of scallop was caught each month in 1997. In 2013, no scallops were caught.";
-  }
-
-
-  else {
-    info = " ";
-  }
-
-    return info;
-}
-
-
-function chart(csvpath, color) {
-
-if (color == "blue") {
-  colorrange = ["#68c0aa", "#60a7c6", "#587199", "#41417d", "#99eeec", 
-  "95E6DC", "#457c92", "#a4d8d7", "#372951","#7dd19b", "#b5d1e9", "#89c9be"];
-}
-else if (color == "colorful") {
-  colorrange = ["#a6cee3", "#1f78b4", "#b2df8a", "#33a02c", "#fb9a99", "#e31a1c", "fdbf6f", "ff7f00", "cab2d6", "6a3d9a", "ffff99", "b15928"];
-}
-
-strokecolor = "#000033";
-//colorrange[0];
-
-var format = d3.time.format("%m/%d/%y");
-
-var margin = {top: 1, right: 50, bottom: 50, left: 80};
-var width = document.body.clientWidth - margin.left - margin.right;
-var height = 400 - margin.top - margin.bottom;
-
-var tooltip = d3.select("body")
-    .append("div")
-    .attr("class", "remove")
-    .style("position", "relative")
-    .style("z-index", "20")
-    .style("visibility", "hidden")
-    .style("top", "1px")
-    .style("left", "55px")
-    .style("line-height", "1.2em");
-
-
-var x = d3.time.scale()
-    .range([0, width]);
-
-var y = d3.scale.linear()
-    .range([height-10, 0]);
-
-var z = d3.scale.ordinal()
-    .range(colorrange);
-
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom")
-    .ticks(d3.time.years);
-
-var yAxis = d3.svg.axis()
-    .scale(y);
-
-var yAxisr = d3.svg.axis()
-    .scale(y);
-
-var stack = d3.layout.stack()
-    .offset("silhouette")
-    .values(function(d) { return d.values; })
-    .x(function(d) { return d.date; })
-    .y(function(d) { return d.value; });
-
-var nest = d3.nest()
-    .key(function(d) { return d.key; });
-
-var area = d3.svg.area()
-    .interpolate("cardinal")
-    .x(function(d) { return x(d.date); })
-    .y0(function(d) { return y(d.y0); })
-    .y1(function(d) { return y(d.y0 + d.y); });
-
-var svg = d3.select(".chart").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-var graph = d3.csv(csvpath, function(data) {
-  data.forEach(function(d) {
-    d.date = format.parse(d.date);
-    d.value = +d.value;
-  });
-
-  var layers = stack(nest.entries(data));
-
-  // Define the div for the tooltip
-var box = d3.select("body").append("div") 
-    .attr("class", "tooltip2")       
-    .style("opacity", 0);
-
-  x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.y0 + d.y; })]);
-
-  svg.selectAll(".layer")
-      .data(layers)
-    .enter().append("path")
-      .attr("class", "layer")
-      .attr("d", function(d) { return area(d.values); })
-      .style("fill", function(d, i) { return z(i); });
-
-
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  svg.append("g")
-      .attr("class", "y axis")
-      .attr("transform", "translate(" + width + ", 0)")
-      .call(yAxis.orient("right"));
-
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis.orient("left"));
-
-  svg.selectAll(".layer")
-    .attr("opacity", 1)
-    .on("mouseover", function(d, i) {
-
-      box.transition()    
-        .duration(50)    
-        .style("opacity", .9);  
-       box.html(d.key + "<br/>" + numberWithCommas(pro))  
-                .style("left", (d3.event.pageX + 2) + "px")   
-                .style("top", (d3.event.pageY - 28) + "px");
-
-      svg.selectAll(".layer").transition()
-      .duration(500)
-      .attr("opacity", function(d, j) {
-        // change opacity of other vars while one is highlighted
-        return j != i ? 0.3 : 1;
-    })})
-
-    .on("mousemove", function(d, i) {
-
-      mousex = d3.mouse(this);
-      mousex = mousex[0];
-      var invertedx = x.invert(mousex);
-      invertedx = invertedx.getFullYear();
-
-      var selected = (d.values);
-      for (var k = 0; k < selected.length; k++) {
-        datearray[k] = selected[k].date
-        datearray[k] = datearray[k].getFullYear();
-      }
-
-      mousedate = datearray.indexOf(invertedx);
-      pro = d.values[mousedate].value;
-
-      box.transition()    
-        .duration(100)    
-        .style("opacity", .9);  
-      // box.style("left", (d3.event.pageX + 2) + "px")   
-              //  .style("top", (d3.event.pageY - 28) + "px");
-
-        box.html(d.key + "<br/>" + numberWithCommas(pro))  
-                .style("left", (d3.event.pageX + 2) + "px")   
-                .style("top", (d3.event.pageY - 28) + "px");
-
-      // on mouseover, info displayed
-      d3.select(this)
-      .classed("hover", true)
-      .attr("stroke", strokecolor)
-      .attr("stroke-width", "0.5px"), 
-
-      tooltip.html( "<p>" + getSpeciesInfo(d.key.trim()) + "</p>" )
-      .style("visibility", "visible");
-      
-    })
-
-
-    .on("mouseout", function(d, i) {
-
-      box.transition()   
-          .duration(500)   
-          .style("opacity", 0); 
-          box.html(d.key + "<br/>" + numberWithCommas(pro))  
-                .style("left", (d3.event.pageX + 2) + "px")   
-                .style("top", (d3.event.pageY - 28) + "px");
-
-     svg.selectAll(".layer")
-      .transition()
-      .duration(500)
-      .attr("opacity", "1");
-      d3.select(this)
-      .classed("hover", false)
-      .attr("stroke-width", "0px"), 
-
-      tooltip.html( "<p>" + getSpeciesInfo(d.key.trim()) + "</p>" )
-      .style("visibility", "hidden");
-  })
-    
-  var vertical = d3.select(".chart")
-        .append("div")
-        .attr("class", "remove")
-        .style("position", "absolute")
-        .style("z-index", "19")
-        .style("width", "2px")
-        .style("height", "408px")
-        .style("top", "181px")
-        .style("bottom", "50px")
-        .style("left", "0px")
-        .style("background", "#f6f6f6");
-
-  d3.select(".chart")
-      .on("mousemove", function(){  
-         mousex = d3.mouse(this);
-         mousex = mousex[0] + 5;
-         vertical.style("left", mousex + "px" )})
-      .on("mouseover", function(){  
-         mousex = d3.mouse(this);
-         mousex = mousex[0] + 5;
-         vertical.style("left", mousex + "px")});
-});
-}
-</script>
-
-</body>
