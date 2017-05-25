@@ -1,12 +1,33 @@
+var markers = [];
+var icons = {}; 
+var map;
+var legend = document.getElementById('legend');;
+
 function initMap() {
 	var mapDiv = document.getElementById('map');
 
-	var map = new google.maps.Map(mapDiv, {
+	map = new google.maps.Map(mapDiv, {
 		center: {lat: -17.3, lng: 146.36},
 		zoom: 6
 	});
 
-	setMarkers(map);
+	setMarkers(map, bleach98);
+	setLegend();
+}
+
+
+
+function setLegend() {
+	for (var key in icons) {
+		var type = icons[key];
+		var name = type.name;
+		var icon = type.icon;
+		var div = document.createElement('div');
+		div.innerHTML = '<img src="pics/' + type.pic + '"> ' + '<font size="4">' + name + '</font>';
+		legend.appendChild(div);
+	}
+
+	map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
 }
 
 //begin reading the global variable json containing information about the trucks and populate the trucks list
@@ -35,10 +56,8 @@ function parseTruckData(bleach_json) {
 // 	// 	}
 // 	// });
 // }
-
-function setMarkers(map) {
-	b98 = parseTruckData(bleach98);
-	b02 = parseTruckData(bleach02);
+function setMarkers(map, data) {
+	b98 = parseTruckData(data);
 
 	function getCircle(color, opacity, magnitude) {
 		return {
@@ -51,7 +70,7 @@ function setMarkers(map) {
 		};
 	}
 
-	var icons = {
+	icons = {
 		one: {
 			name: '<1% Bleached',
 			icon: getCircle('green', .5, 4),
@@ -79,19 +98,6 @@ function setMarkers(map) {
 		}
 	};
 
-	
-	var legend = document.getElementById('legend');
-	for (var key in icons) {
-		var type = icons[key];
-		var name = type.name;
-		var icon = type.icon;
-		var div = document.createElement('div');
-		div.innerHTML = '<img src="pics/' + type.pic + '"> ' + '<font size="4">' + name + '</font>';
-		legend.appendChild(div);
-	}
-
-	map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend);
-
 
 	for (var i = 0; i < b98.length; i++) {
 		(function(index){
@@ -117,6 +123,7 @@ function setMarkers(map) {
 				icon: type_icon,
 				title: reef[0]
 			});
+			markers.push(marker);
 			var infowindow = new google.maps.InfoWindow({
 				content: '<div id="tooltip">'+
 				'<h1>' + reef[0] + '</h1>' +
@@ -128,3 +135,47 @@ function setMarkers(map) {
 		})(i);
 	}
 }
+
+function reload98() {
+	var mapDiv = document.getElementById('map');
+
+	map = new google.maps.Map(mapDiv, {
+		center: {lat: -17.3, lng: 146.36},
+		zoom: 6
+	});
+
+	$('#map1').removeClass('button').addClass('buttonselect');
+	$('#map2').removeClass('buttonselect').addClass('button');
+	$('#map3').removeClass('buttonselect').addClass('button');
+	setMarkers(map, bleach98);
+}
+
+function reload02() {
+	var mapDiv = document.getElementById('map');
+
+	map = new google.maps.Map(mapDiv, {
+		center: {lat: -17.3, lng: 146.36},
+		zoom: 6
+	});
+
+	$('#map1').removeClass('buttonselect').addClass('button');
+	$('#map2').removeClass('button').addClass('buttonselect');
+	$('#map3').removeClass('buttonselect').addClass('button');
+	setMarkers(map, bleach02);
+}
+
+function reload16() {
+	var mapDiv = document.getElementById('map');
+
+	map = new google.maps.Map(mapDiv, {
+		center: {lat: -17.3, lng: 146.36},
+		zoom: 6
+	});
+
+	$('#map1').removeClass('buttonselect').addClass('button');
+	$('#map2').removeClass('buttonselect').addClass('button');
+	$('#map3').removeClass('button').addClass('buttonselect');
+	setMarkers(map, bleach16);
+}
+
+//$('#map2').removeClass('button').addClass('buttonselect');

@@ -37,7 +37,7 @@ function initializeMap() {
 
   // svg attributes
   svg.setAttribute("class", "svg");
-  svg.setAttribute("width", "110%");
+  svg.setAttribute("width", "90%");
   svg.setAttribute("height", "90%");
   svg.setAttribute("viewBox", "0 0 " + width + " " + height);
   
@@ -124,16 +124,16 @@ function initializeMap() {
         });
 
 
-        // append the hex to our svg
+        // append the hex to svg
         svg.appendChild(hexGroup);
         // increase the state index reference
         state_index++;
       }
 
-      // move our x plot to next hex position
+      // move x plot to next hex position
       loc_x += hex_apo * 2; 
     }
-    // move our y plot to next row position
+    // move y plot to next row position
     y += hex_di * 0.75; 
     // toggle offset per row
     offset = !offset;
@@ -147,20 +147,17 @@ function initializeMap() {
 // run the initialization script
 initializeMap();
 
-var abbr;
- 
 // individual hex calculations
 function getHexGroup(svg,x,y,r,state,ratio,width,data) {
   var svgNS  = svg.namespaceURI, // svgNS for creating svg elements
   		group	 = document.createElementNS(svgNS, "g"),
   		hex 	 = document.createElementNS(svgNS, "polygon"),
-  		//abbr 	 = document.createElementNS(svgNS, "text"),
+  		abbr 	 = document.createElementNS(svgNS, "text"),
   		name 	 = document.createElementNS(svgNS, "text"),
       pi_six = Math.PI/6,
       cos_six = Math.cos(pi_six),
       sin_six = Math.sin(pi_six);
 
-  abbr = document.createElementNS(svgNS, "text");
 
   // hexagon polygon points
   var hex_points = [
@@ -232,6 +229,7 @@ function getHexGroup(svg,x,y,r,state,ratio,width,data) {
 
       if(data[key] == 0) {
 
+        // data unavailable 
         if(count == 0) {
           text.setAttribute("class", "data");
           text.textContent = "Data unavailable";
@@ -239,6 +237,7 @@ function getHexGroup(svg,x,y,r,state,ratio,width,data) {
         } 
       } 
 
+    // format affliction text
     else {
       
       text.setAttribute("class", "data");
@@ -250,6 +249,7 @@ function getHexGroup(svg,x,y,r,state,ratio,width,data) {
 
       } 
 
+      // format percentage change text
       else if(keyToName(key) == "Perc Change") {
 
           if(data[key] > 0) {
@@ -258,7 +258,7 @@ function getHexGroup(svg,x,y,r,state,ratio,width,data) {
             text.textContent = "Percentage Change" + ": " + data[key] + "%";
           }
 
-        
+        // format colony change text
       } else {
 
           if(data[key] > 0) {
@@ -297,6 +297,7 @@ function getHexGroup(svg,x,y,r,state,ratio,width,data) {
   return group;
 }
 
+// formating the key name 
 function keyToName(str) {
   return str.replace(/_/g,' ')
     .replace(/\w\S*/g, function(txt) {
@@ -304,6 +305,7 @@ function keyToName(str) {
   });
 }
 
+// adds commas to numbers every 3 spaces from the end
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
@@ -320,6 +322,7 @@ function usStateMatrix() {
     [1,0,0,0,1,0,0,1,0,0,0,0]
   ]
 }
+
 
 function usStateData() {
   return {
@@ -441,103 +444,20 @@ function usStateData() {
   }
 }
 
-function makeLineGraph (selectedState) {
 
-    // Set the dimensions of the canvas / graph
-    var margin = {top: 50, right: 20, bottom: 50, left: 80},
-        width = 600 - margin.left - margin.right,
-        height = 330 - margin.top - margin.bottom,
-        padding = 100; // space around the chart, not including labels
 
-    // Parse the date / time
-    //var parseDate = d3.time.format("%d-%b-%y").parse;
 
-    // Set the ranges
-    var x = d3.scale.linear().range([0, width]);
-    var y = d3.scale.linear().range([height, 0]);
 
-    // Define the axes
-    var xAxis = d3.svg.axis().scale(x)
-        .orient("bottom").ticks(5);
 
-    var yAxis = d3.svg.axis().scale(y)
-        .orient("left").ticks(5);
 
-    // Define the line
-    var valueline = d3.svg.line()
-        .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.close); });
-        
-    // Adds the svg canvas
-    var svg = d3.select("body")
-        .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-            .attr("transform", 
-                  "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.append("text")
-            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-            .attr("transform", "translate("+ -55 +","+(height/2)+")rotate(-90)") 
-            .style("font-size", "13px")
-            .style("font-family", "optima")
-            .text("Number of Bee Colonies");
 
-    svg.append("text")
-            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-            .attr("transform", "translate("+ (width/2) +","+(300-(padding/3))+")") 
-            .style("font-size", "13px")
-            .style("font-family", "optima")
-            .text("Time Period (Q1 2015 to Q1 2016)");
 
-     svg.append("text")
-        .attr("x", (width / 2))             
-        .attr("y", 0 - (margin.top / 1.8))
-        .attr("text-anchor", "middle")  
-        .style("font-size", "18px")
-        .style("font-family", "optima")
-        //.style("font-weight", "bold")
-        .text("Bee Colony Population Over Time: " + selectedState);
 
-    // Get the data
-    d3.csv("lineplotdata.csv", function(error, data) {
 
-        data.forEach(function(d) {
 
-            d["state"] = d["state"];
-            d.date = +d.date;
-            d.close = +d.close;
-            
-        });
 
-        // function to only get desired state to plot
-        function isState(x) {
-            return x.state == selectedState;
-        }
 
-        // get subset of data
-        data = data.filter(isState);
 
-        // Scale the range of the data
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return d.close; })]);
 
-        // Add the valueline path.
-        svg.append("path")
-            .attr("class", "line")
-            .attr("d", valueline(data));
 
-        // Add the X Axis
-        svg.append("g")
-            .attr("class", "xaxis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(xAxis);
-
-        // Add the Y Axis
-        svg.append("g")
-            .attr("class", "yaxis")
-            .call(yAxis);
-
-    });
-}

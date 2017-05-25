@@ -1,7 +1,7 @@
 .svg {
   position: absolute;
   top: 57%;
-  left: 50%;
+  left: 57%;
   -webkit-transform: translate3d(-50%, -50%, 0);
           transform: translate3d(-50%, -50%, 0);
 }
@@ -83,6 +83,7 @@
           animation: scale-polygon 300ms ease-in forwards;
 }
 
+/* formatting hex shapes */
 @-webkit-keyframes scale-polygon {
   from {
     -webkit-transform: scale(1);
@@ -128,6 +129,8 @@
     opacity: 0;
   }
 }
+
+/* header styling */ 
 h1 {
   color: #000000;
   font-weight: 100;
@@ -150,96 +153,111 @@ h1 a {
   font-size: 0.5em;
 }
 
-  .my-legend .legend-title {
-    text-align: left;
-    margin-bottom: 8px;
-    font-weight: bold;
-    font-size: 90%;
-    position: absolute;
-    bottom: 80px;
-    right: 30px;
-    font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
-    }
 
-  .my-legend .legend-scale ul {
-    margin: 0.5px;
-    /*padding-top: 7px; */
-    float: right;
-    list-style: none;
-    position: absolute;
-    bottom: 33px;
-    right: 30px;
-    font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
-
-    }
-
-  .my-legend .legend-scale ul li {
-    padding-bottom: 10px;
-    display: block;
-    float: right;
-    width: 70px;
-    text-align: center;
-    font-size: 80%;
-    list-style: none;
-    /* position: absolute;
-    bottom: 30px; */
-    }
-
-  .my-legend ul.legend-labels li span {
-    display: block;
-    float: right;
-    height: 13px;
-    width: 70px;
-    position: absolute;
-    bottom: 30px;
-    opacity: 0.75;
-    }
-
-  .my-legend .legend-source {
-    font-size: 70%;
-    color: #999;
-    clear: both;
-    position: absolute;
-    padding-left: 7px;
-    bottom: 20px;
-    right: 30px;
-    }
-
-  .my-legend a {
-    color: #777;
-    float: right;
-    }
-
-path { 
-    stroke: #000;
-    stroke-width: 2;
-    fill: none;
+/* styling the variable text info and the text displayed on slide */ 
+#variable {
+  font-size: 17px;
+  font-weight: 100;
+  color: #000;
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
 }
 
-.axis path,
-.axis line {
-    fill: #000;
-    stroke: #000;
-    stroke-width: .8;
-    shape-rendering: crispEdges;
-    
+#h3 {
+  font-size: 14.5px;
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
 }
 
-.xaxis {
-    font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    fill: #000;
-    stroke: #000;
-    stroke-width: .5;
+#highlight {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
 }
 
-.yaxis {
-    font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    fill: #000;
-    stroke: #000;
-    stroke-width: .5;
+#results {
+  font-size: 16px;
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
 }
+
+.more {
+  font-size: 15px;
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+  color: #999999;
+}
+
+.more2 {
+  font-size: 17px;
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+  color: #999999;
+}
+
+/* positioning variable text info */
+.mycontainer {
+  position: absolute;
+  left: 40px;
+  top: 50px;
+  width: 320px;
+}
+
+/* following code is for formatting various elements of the legend */ 
+.my-legend .legend-title {
+  text-align: left;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 90%;
+  position: absolute;
+  bottom: 80px;
+  right: 30px;
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+  }
+
+.my-legend .legend-scale ul {
+  margin: 0.5px;
+  /*padding-top: 7px; */
+  float: right;
+  list-style: none;
+  position: absolute;
+  bottom: 33px;
+  right: 30px;
+  font-family: Optima, 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+
+  }
+
+.my-legend .legend-scale ul li {
+  padding-bottom: 10px;
+  display: block;
+  float: right;
+  width: 70px;
+  text-align: center;
+  font-size: 80%;
+  list-style: none;
+  /* position: absolute;
+  bottom: 30px; */
+  }
+
+.my-legend ul.legend-labels li span {
+  display: block;
+  float: right;
+  height: 13px;
+  width: 70px;
+  position: absolute;
+  bottom: 30px;
+  opacity: 0.75;
+  }
+
+.my-legend .legend-source {
+  font-size: 70%;
+  color: #999;
+  clear: both;
+  position: absolute;
+  padding-left: 7px;
+  bottom: 20px;
+  right: 30px;
+  }
+
+.my-legend a {
+  color: #777;
+  float: right;
+  }
 
 
 

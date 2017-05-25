@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+	<div id="everything">
+		<h1>Top Commercial Fish Landings in Years 1980 - 2015</h1>
+		<h2>Top 10 Species in Million Dollars</h2>	
+		<br></br>
+		Select Years: <input type="range" min="1980" max="2015" id="year_selection" value="1980" oninput="year_output.value = year_selection.value" class="inputs">
+		<output name="yearOutput" id="year_output">1980</output><p>
+		<input type="checkbox" id="myCheckbox" class="inputs"> In 2015 Value
+		<br></br>
+		<div id="chart"></div>
+	</div>
+	<script>
+
+//updatingBarChart.js
+
+var setup = function(targetID){
+	//Set size of svg element and chart
+	var margin = {top: 0, right: 0, bottom: 0, left: 0},
+		width = 600 - margin.left - margin.right,
+		height = 400 - margin.top - margin.bottom,
+		categoryIndent = 4*15 + 5,
+		defaultBarWidth = 2000;
+
+	//Set up scales
+	var x = d3.scale.linear()
+	  .domain([0,defaultBarWidth])
+	  .range([0,width]);
+	var y = d3.scale.ordinal()
+	  .rangeRoundBands([0, height], 0.1, 0);
+
+	//Create SVG element
+	d3.select(targetID).selectAll("svg").remove()
+	var svg = d3.select(targetID).append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+	  .append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	
+	//Package and export settings
+	var settings = {
+	  margin:margin, width:width, height:height, categoryIndent:categoryIndent,
+	  svg:svg, x:x, y:y
+	}
+	return settings;
+}
+
+var redrawChart = function(targetID, newdata) {
+
+	//Import settings
+	var margin=settings.margin, width=settings.width, height=settings.height, categoryIndent=settings.categoryIndent, 
+	svg=settings.svg, x=settings.x, y=settings.y;
+
+	//Reset domains
+	y.domain(newdata.sort(function(a,b){
+	  return b.Dollars - a.Dollars;
+	})
+	  .map(function(d) { return d.Category; }));
+	// var barmax = d3.max(newdata, function(e) {
+	//   return e.Dollars;
+	// });
+	var barmax = d3.select("#myCheckbox").property("checked") ? 3173 : 1000
+	x.domain([0,barmax]);
+
+	/////////
+	//ENTER//
+	/////////
+
+	//Bind new data to chart rows 
+
+	//Create chart row and move to below the bottom of the chart
+	var chartRow = svg.selectAll("g.chartRow")
+	  .data(newdata, function(d){ return d.Category});
+	var newRow = chartRow
+	  .enter()
+	  .append("g")
+	  .attr("class", "chartRow")
+	  .attr("transform", "translate(0," + height + margin.top + margin.bottom + ")");
+
+	//Add rectangles
+	newRow.insert("rect")
+	  .attr("class","bar")
+	  .attr("x", 0)
+	  .attr("opacity",0)
+	  .attr("height", y.rangeBand())
+	  .attr("width", function(d) { return x(d.Dollars);}) 
+
+	//Add value labels
+	newRow.append("text")
+	  .attr("class","label")
+	  .attr("y", y.rangeBand()/2)
+	  .attr("x",0)
+	  .attr("opacity",0)
+	  .attr("dy",".35em")
+	  .attr("dx","0.5em")
+	  .text(function(d){return d.Dollars;}); 
+	
+	//Add Headlines
+	newRow.append("text")
+	  .attr("class","category")
+	  .attr("text-overflow","ellipsis")
+	  .attr("y", y.rangeBand()/2)
+	  .attr("x",categoryIndent)
+	  .attr("opacity",0)
+	  .attr("dy",".35em")
+	  .attr("dx","0.5em")
+	  .text(function(d){return d.Category});
+
+
+	//////////
+	//UPDATE//
+	//////////
+	
+	//Update bar widths
+	chartRow.select(".bar").transition()
+	  .duration(300)
+	  .attr("width", function(d) { return x(d.Dollars);})
+	  .attr("opacity",1);
+
+	//Update data labels
+	chartRow.select(".label").transition()
+	  .duration(300)
+	  .attr("opacity",1)
+	  .tween("text", function(d) { 
+		var i = d3.interpolate(+this.textContent.replace(/\,/g,''), +d.Dollars);
+		return function(t) {
+		  this.textContent = Math.round(i(t));
+		};
+	  });
+
+	//Fade in categories
+	chartRow.select(".category").transition()
+	  .duration(300)
+	  .attr("opacity",1);
+
+
+	////////
+	//EXIT//
+	////////
+
+	//Fade out and remove exit elements
+	chartRow.exit().transition()
+	  .style("opacity","0")
+	  .attr("transform", "translate(0," + (height + margin.top + margin.bottom) + ")")
+	  .remove();
+
+
+	////////////////
+	//REORDER ROWS//
+	////////////////
+
+	var delay = function(d, i) { return 200 + i * 30; };
+
+	chartRow.transition()
+		.delay(delay)
+		.duration(900)
+		.attr("transform", function(d){ return "translate(0," + y(d.Category) + ")"; });
+};
+
+//// SLIDER CONTROL ////
+// var slider = svg.append("g")
+//     .attr("class", "slider")
+//     .attr("transform", "translate(" + margin.left + "," + height / 2 + ")");
+
+// slider.append("line")
+//     .attr("class", "track")
+//     .attr("x1", x.range()[0])
+//     .attr("x2", x.range()[1])
+//   .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+//     .attr("class", "track-inset")
+//   .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+//     .attr("class", "track-overlay")
+//     .call(d3.drag()
+//         .on("start.interrupt", function() { slider.interrupt(); })
+//         .on("start drag", function() { hue(x.invert(d3.event.x)); }));
+
+// slider.insert("g", ".track-overlay")
+//     .attr("class", "ticks")
+//     .attr("transform", "translate(0," + 18 + ")")
+//   .selectAll("text")
+//   .data(x.ticks(10))
+//   .enter().append("text")
+//     .attr("x", x)
+//     .attr("text-anchor", "middle")
+//     .text(function(d) { return d + "°"; });
+
+// var handle = slider.insert("circle", ".track-overlay")
+//     .attr("class", "handle")
+//     .attr("r", 9);
+
+
+//Pulls data
+//Since our data is fake, adds some random changes to simulate a data stream.
+//Uses a callback because d3.json loading is asynchronous
+var pullData = function(settings,callback,year_selected,normalized){
+	if(!normalized) {
+		d3.json("fishData.json", function (err, data){
+		if (err) return console.warn(err);
+
+		var newData = data.filter(function (d){ return (d.Year === year_selected)})
+
+		newData = formatData(newData);
+
+		callback(settings,newData);
+		})
+	}
+	else {
+		d3.json("fishData2.json", function (err, data){
+		if (err) return console.warn(err);
+
+		var newData = data.filter(function (d){ return (d.Year === year_selected)})
+
+		newData = formatData(newData);
+
+		callback(settings,newData);
+		})
+	}
+	
+}
+
+//Sort data in descending order and take the top 15 values
+var formatData = function(data){
+    return data.sort(function (a, b) {
+        return b.Dollars - a.Dollars;
+      })
+	  .slice(0, 10);
+}
+
+//I like to call it what it does
+var redraw = function(settings,year_selected,normalized){
+	pullData(settings,redrawChart,year_selected,normalized)
+}
+
+//setup (includes first draw)
+var settings = setup('#chart');
+redraw(settings, 1980, 0)
+
+var global_year_selected=1980;
+
+d3.select("#year_selection").on("input", function() {
+  	// adjust the text on the range slider
+	  	global_year_selected = +this.value;
+	  	d3.select("#year_selection-value").text(global_year_selected);
+	  	d3.select("#year_selection").property("value", global_year_selected);
+
+	  	// update the value
+	  	redraw(settings, global_year_selected,d3.select("#myCheckbox").property("checked") ? 1 : 0);
+	});
+
+    function update(year_selection) {
+
+	}
+
+d3.select("#myCheckbox").on("change",update2);
+	update2();
+	function update2(){
+		redraw(settings, global_year_selected, d3.select("#myCheckbox").property("checked") ? 1 : 0)
+	}
+	</script>
+</body>

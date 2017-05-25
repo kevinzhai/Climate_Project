@@ -28,10 +28,13 @@ app.get('/ik', function (req, res) {
 	res.render('ik');
 });
 
-app.get('/craig', function (req, res) {
-	res.render('craig');
+app.get('/ik2', function (req, res) {
+	res.render('ik2');
 });
 
+app.get('/craig', function (req, res) {
+	res.render('craig_test2');
+});
 
 // Start listening for requests
 app.listen(app.get('port'), function() {
