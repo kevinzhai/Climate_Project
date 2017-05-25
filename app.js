@@ -33,7 +33,7 @@ app.get('/ik2', function (req, res) {
 });
 
 app.get('/craig', function (req, res) {
-	res.render('craig_test2');
+	res.render('craig');
 });
 
 // Start listening for requests
